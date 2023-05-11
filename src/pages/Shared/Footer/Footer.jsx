@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="footer p-10 bg-base-200 text-base-content">
       <div>
         <Link to ="/">
-        <img src={logo} alt="" />
+        <img style={{height:"60px"}} src={logo} alt="" />
         </Link>
         <p>
           ACME Industries Ltd.
