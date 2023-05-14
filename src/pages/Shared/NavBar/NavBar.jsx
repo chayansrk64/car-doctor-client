@@ -10,7 +10,8 @@ const NavBar = () => {
   const handleLogOut = () => {
       logOut()
       .then( () => {
-          alert('LogOut Successfull!!!')
+          alert('Log Out Successfull!!!')
+          localStorage.removeItem('car-access-token')
       })
       .catch(error => console.log(error))
   }
@@ -20,8 +21,8 @@ const NavBar = () => {
       <li><Link to="/about">About </Link></li>
       { 
        user?.email ?  <>
-       <li>  <li><Link to="/booking">My Booking </Link></li> </li>
-       <li><button onClick={handleLogOut}>LogOut</button></li>
+       <li>  <li><Link to="/booking">My Bookings </Link></li> </li>
+       <li><button onClick={handleLogOut}>Log Out</button></li>
        </> :
        <li><Link to="/login">Login </Link></li>
       }

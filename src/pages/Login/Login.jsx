@@ -1,13 +1,17 @@
 import loginImg from "../../assets/images/login/login.svg";
-import {Link} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext } from 'react';
-
+ 
 const Login = () => {
 
     const {signInUser} = useContext(AuthContext);
+    const navigate = useNavigate()
+    const location = useLocation()
 
-
+    const  from = location.state?.from?.pathname || "/";
+    // console.log(from);
+    
     const handleLogin = event => {
         event.preventDefault()
         const form = event.target;
@@ -18,8 +22,32 @@ const Login = () => {
 
         signInUser(email, password)
         .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
+            const user = result.user;
+            console.log(user);
+            const loggedUser = {
+              email: user.email
+            }
+            if(user){
+              alert("Login Successfully")
+            }
+           
+            fetch('http://localhost:5000/jwt', {
+              method: "POST",
+              headers: {
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify(loggedUser)
+            })
+            .then(res => res.json())
+            .then(data => {
+              console.log("jwt response",data);
+              // warning localstorage is not the best place to store the jwt access token(second best)
+              localStorage.setItem('car-access-token', data.token)
+              navigate(from, { replace: true });
+
+            })
+
+
         })
         .catch(error => console.log(error))
 
@@ -52,7 +80,7 @@ const Login = () => {
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
