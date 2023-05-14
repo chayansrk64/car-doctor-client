@@ -25,28 +25,27 @@ const Login = () => {
         .then(result => {
             const user = result.user;
             console.log(user);
-            const loggedUser = {
-              email: user.email
-            }
+           
             if(user){
               alert("Login Successfully")
             }
-           
-            fetch('http://localhost:5000/jwt', {
-              method: "POST",
-              headers: {
-                'content-type': 'application/json'
-              },
-              body: JSON.stringify(loggedUser)
-            })
-            .then(res => res.json())
-            .then(data => {
-              console.log("jwt response",data);
-              // warning localstorage is not the best place to store the jwt access token(second best)
-              localStorage.setItem('car-access-token', data.token)
-              navigate(from, { replace: true });
+            navigate(from, { replace: true });
 
-            })
+            // fetch('https://car-doctor-server-bice.vercel.app/jwt', {
+            //   method: "POST",
+            //   headers: {
+            //     'content-type': 'application/json'
+            //   },
+            //   body: JSON.stringify(loggedUser)
+            // })
+            // .then(res => res.json())
+            // .then(data => {
+            //   console.log("jwt response",data);
+            //   // warning localstorage is not the best place to store the jwt access token(second best)
+            //   localStorage.setItem('car-access-token', data.token)
+            //  
+
+            // })
 
 
         })

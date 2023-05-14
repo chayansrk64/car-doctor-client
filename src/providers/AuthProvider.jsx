@@ -39,6 +39,35 @@ const AuthProvider = ({children}) => {
             setUser(currentUser)
             console.log("Current User", currentUser);
             setLoading(false)
+
+
+            if(currentUser && currentUser.email){
+
+             const loggedUser = {
+                email: currentUser.email
+            }
+                 
+            fetch('https://car-doctor-server-bice.vercel.app/jwt', {
+              method: "POST",
+              headers: {
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify(loggedUser)
+            })
+            .then(res => res.json())
+            .then(data => {
+              console.log("jwt response",data);
+              // warning localstorage is not the best place to store the jwt access token(second best)
+              localStorage.setItem('car-access-token', data.token)
+             
+            })
+
+            }
+            else{
+                localStorage.removeItem('car-access-token')
+            }
+
+
         })
         return () => {
             unsubscribe();

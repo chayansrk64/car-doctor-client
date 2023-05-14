@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
   const { user } = useContext(AuthContext);
-  const url = `http://localhost:5000/bookings?email=${user.email}`;
+  const url = `https://car-doctor-server-bice.vercel.app/bookings?email=${user.email}`;
   const [bookings, setBookings] = useState([]);
   const navigate = useNavigate()
 
@@ -34,7 +34,7 @@ const Booking = () => {
   const handleDelete = id => {
     const proceed = confirm("Are you sure to Delete?")
     if(proceed){
-        fetch(`http://localhost:5000/bookings/${id}`, {
+        fetch(`https://car-doctor-server-bice.vercel.app/bookings/${id}`, {
             method: "DELETE"
         })
         .then(res => res.json())
@@ -50,7 +50,7 @@ const Booking = () => {
   }
 
   const handleConfirm = id => {
-        fetch(`http://localhost:5000/bookings/${id}`, {
+        fetch(`https://car-doctor-server-bice.vercel.app/bookings/${id}`, {
             method: "PATCH",
             headers: {
                 "content-type": "application/json"
