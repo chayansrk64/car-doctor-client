@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookingRow from "./BookingRow";
+import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
   const { user } = useContext(AuthContext);
   const url = `http://localhost:5000/bookings?email=${user.email}`;
   const [bookings, setBookings] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch(url, {
@@ -15,8 +17,17 @@ const Booking = () => {
       }
     })
       .then((res) => res.json())
-      .then((data) => setBookings(data));
-  }, [url]);
+      .then((data) => {
+        if(!data.error){
+          setBookings(data)
+        }
+        else{
+          // logout and then navigate
+          alert("token expired")
+          navigate('/')
+        }
+      });
+  }, [url, navigate]);
 
 
 
